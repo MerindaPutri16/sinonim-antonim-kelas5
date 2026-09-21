@@ -1,0 +1,1 @@
+# sinonim-antonim-kelas5
