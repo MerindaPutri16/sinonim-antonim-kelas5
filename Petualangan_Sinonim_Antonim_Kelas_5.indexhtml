@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Petualangan Sinonim & Antonim - Kelas 5 SD</title>
+<style>
+:root{
+  --blue:#2563eb; --blue2:#dbeafe; --yellow:#fbbf24; --green:#16a34a;
+  --red:#dc2626; --purple:#7c3aed; --ink:#172033; --card:#ffffff; --bg:#eef6ff;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:linear-gradient(135deg,#eef6ff,#f7f1ff);color:var(--ink)}
+button{font:inherit;cursor:pointer;border:0}
+.app{min-height:100vh}
+header{background:linear-gradient(100deg,#2563eb,#7c3aed);color:#fff;padding:18px 28px;display:flex;justify-content:space-between;align-items:center;gap:20px;position:sticky;top:0;z-index:10}
+header h1{margin:0;font-size:clamp(22px,3vw,34px)}
+header p{margin:5px 0 0;opacity:.9}
+.score{background:#fff;color:#172033;border-radius:18px;padding:10px 16px;font-weight:bold;min-width:115px;text-align:center}
+nav{display:flex;gap:8px;flex-wrap:wrap;padding:12px 20px;background:#fff;box-shadow:0 3px 12px #0001;position:sticky;top:82px;z-index:9}
+nav button{padding:10px 15px;border-radius:12px;background:#e8eefc;color:#244; font-weight:bold}
+nav button.active{background:#2563eb;color:white}
+main{max-width:1200px;margin:auto;padding:25px}
+section{display:none}
+section.active{display:block}
+.hero{background:white;border-radius:26px;padding:35px;box-shadow:0 8px 30px #00000012;text-align:center}
+.hero h2{font-size:clamp(30px,5vw,54px);margin:10px 0;color:#2563eb}
+.hero .emoji{font-size:65px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
+.card{background:white;border-radius:22px;padding:22px;box-shadow:0 6px 22px #00000012}
+.card h3{margin-top:0}
+.definition{border-left:7px solid var(--blue);background:#eff6ff}
+.definition.ant{border-left-color:var(--red);background:#fff1f2}
+.bigword{font-size:42px;font-weight:900;text-align:center;margin:10px}
+.pair{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap}
+.wordbox{padding:18px 24px;border-radius:18px;background:#eff6ff;font-size:27px;font-weight:bold;min-width:130px;text-align:center}
+.wordbox.red{background:#fff1f2}
+.arrow{font-size:30px}
+.tip{background:#fef3c7;border-radius:16px;padding:15px;font-weight:bold}
+.activity{background:white;border-radius:24px;padding:25px;box-shadow:0 8px 28px #00000012;margin-top:18px}
+.choice-grid{display:grid;grid-template-columns:repeat(2,minmax(150px,1fr));gap:12px;margin-top:18px}
+.choice{padding:18px;border-radius:16px;background:#eef2ff;font-weight:bold;border:3px solid transparent;font-size:20px}
+.choice:hover{transform:translateY(-2px)}
+.choice.correct{background:#dcfce7;border-color:#16a34a}
+.choice.wrong{background:#fee2e2;border-color:#dc2626}
+.feedback{font-size:19px;font-weight:bold;min-height:28px;margin-top:15px}
+.next{background:#2563eb;color:#fff;padding:13px 22px;border-radius:14px;font-weight:bold;margin-top:15px}
+.match{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.match-col{display:grid;gap:10px}
+.match-item{padding:16px;background:#f3f4f6;border-radius:14px;font-weight:bold;text-align:center;border:3px solid transparent}
+.match-item.selected{border-color:#7c3aed;background:#ede9fe}
+.match-item.done{background:#dcfce7;border-color:#16a34a}
+.namebox{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}
+input{padding:13px 15px;border:2px solid #cbd5e1;border-radius:12px;font-size:17px}
+.primary{background:#7c3aed;color:#fff;padding:13px 20px;border-radius:12px;font-weight:bold}
+.timer{font-size:42px;font-weight:900;text-align:center;color:#2563eb}
+.challenge{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:18px 0}
+.challenge span{padding:12px 18px;background:#e0e7ff;border-radius:14px;font-size:23px;font-weight:bold}
+.footer{text-align:center;padding:30px;color:#64748b}
+@media(max-width:650px){header{flex-direction:column;align-items:flex-start}.choice-grid{grid-template-columns:1fr}.match{grid-template-columns:1fr}nav{top:132px}}
+</style>
+</head>
+<body>
+<div class="app">
+<header>
+  <div><h1>🚀 Petualangan Kata</h1><p>Bahasa Indonesia Kelas 5 • Sinonim & Antonim</p></div>
+  <div class="score">⭐ Skor: <span id="score">0</span></div>
+</header>
+
+<nav>
+  <button class="tab active" data-tab="beranda">🏠 Beranda</button>
+  <button class="tab" data-tab="materi">📚 Materi</button>
+  <button class="tab" data-tab="misi1">🎯 Misi 1</button>
+  <button class="tab" data-tab="misi2">🧩 Misi 2</button>
+  <button class="tab" data-tab="misi3">⚡ Misi 3</button>
+  <button class="tab" data-tab="tantangan">🏆 Tantangan</button>
+</nav>
+
+<main>
+<section id="beranda" class="active">
+  <div class="hero">
+    <div class="emoji">🔎📖✨</div>
+    <h2>Petualangan Sinonim & Antonim</h2>
+    <p style="font-size:20px">Hari ini kita tidak hanya menonton. Kita akan <b>memilih, mencocokkan, bergerak, berdiskusi, dan berlomba</b> bersama!</p>
+    <div class="grid" style="margin-top:25px">
+      <div class="card"><h3>🎯 Tujuan</h3><p>Siswa dapat memahami dan menentukan sinonim serta antonim dalam kalimat sederhana.</p></div>
+      <div class="card"><h3>🤝 Cara Bermain</h3><p>Guru menampilkan halaman di PID. Siswa bergantian maju atau menjawab bersama kelompok.</p></div>
+      <div class="card"><h3>⭐ Sistem Skor</h3><p>Jawaban benar menambah poin. Gunakan tantangan terakhir untuk kuis cepat antarkelompok.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="materi">
+  <h2>📚 Kenalan dengan Sinonim & Antonim</h2>
+  <div class="grid">
+    <div class="card definition">
+      <h3>🔵 SINONIM</h3>
+      <p><b>Sinonim</b> adalah kata yang memiliki <b>makna sama atau hampir sama</b> dengan kata lain.</p>
+      <div class="pair"><div class="wordbox">RAJIN</div><div class="arrow">↔</div><div class="wordbox">TEKUN</div></div>
+      <p style="text-align:center">Contoh: rajin ↔ tekun, indah ↔ elok, senang ↔ gembira.</p>
+    </div>
+    <div class="card definition ant">
+      <h3>🔴 ANTONIM</h3>
+      <p><b>Antonim</b> adalah kata yang memiliki <b>makna berlawanan</b> dengan kata lain.</p>
+      <div class="pair"><div class="wordbox red">TINGGI</div><div class="arrow">↔</div><div class="wordbox red">RENDAH</div></div>
+      <p style="text-align:center">Contoh: besar ↔ kecil, panas ↔ dingin, cepat ↔ lambat.</p>
+    </div>
+  </div>
+  <div class="card" style="margin-top:18px">
+    <h3>💡 Cara Mudah Mengingat</h3>
+    <div class="grid">
+      <div class="tip">SINONIM = maknanya mirip 🤝</div>
+      <div class="tip">ANTONIM = maknanya berlawanan ↔️</div>
+      <div class="tip">Lihat juga kata di dalam kalimat agar tidak salah menentukan makna.</div>
+    </div>
+  </div>
+</section>
+
+<section id="misi1">
+  <div class="activity">
+    <h2>🎯 Misi 1 — Pilih Pasangannya!</h2>
+    <p>Sentuh jawaban yang merupakan <b>sinonim</b> dari kata yang ditampilkan.</p>
+    <div class="bigword" id="q1word">CERIA</div>
+    <div class="choice-grid" id="choices1"></div>
+    <div class="feedback" id="feedback1"></div>
+    <button class="next" id="next1" style="display:none">Soal Berikutnya ➜</button>
+  </div>
+</section>
+
+<section id="misi2">
+  <div class="activity">
+    <h2>🧩 Misi 2 — Lawan Kata!</h2>
+    <p>Sentuh jawaban yang merupakan <b>antonim</b> dari kata yang ditampilkan.</p>
+    <div class="bigword" id="q2word">RAMAI</div>
+    <div class="choice-grid" id="choices2"></div>
+    <div class="feedback" id="feedback2"></div>
+    <button class="next" id="next2" style="display:none">Soal Berikutnya ➜</button>
+  </div>
+</section>
+
+<section id="misi3">
+  <div class="activity">
+    <h2>🧠 Misi 3 — Cocokkan Kata</h2>
+    <p>Pilih satu kata di kiri, lalu pilih pasangannya di kanan.</p>
+    <div class="match">
+      <div class="match-col" id="leftWords"></div>
+      <div class="match-col" id="rightWords"></div>
+    </div>
+    <div class="feedback" id="matchFeedback"></div>
+  </div>
+</section>
+
+<section id="tantangan">
+  <div class="activity">
+    <h2>🏆 Tantangan Kelas</h2>
+    <div class="namebox">
+      <input id="teamName" placeholder="Nama kelompok (mis. Kelompok Merah)">
+      <button class="primary" onclick="startChallenge()">Mulai</button>
+    </div>
+    <div class="timer" id="timer">30</div>
+    <div class="challenge" id="challengeWords"></div>
+    <p id="challengeInstruction" style="text-align:center;font-size:20px;font-weight:bold">Masukkan nama kelompok, lalu tekan Mulai.</p>
+    <div style="text-align:center">
+      <button class="next" onclick="challengeAnswer(true)">✅ BENAR +10</button>
+      <button class="next" onclick="challengeAnswer(false)" style="background:#dc2626">❌ SALAH</button>
+    </div>
+    <div class="card" style="margin-top:20px">
+      <h3>📌 Ide penggunaan di PID</h3>
+      <p>Guru menyebutkan kata, lalu kelompok berdiskusi cepat. Satu siswa maju memilih <b>BENAR</b> jika pasangan yang dibuat guru tepat, atau <b>SALAH</b> jika tidak tepat.</p>
+    </div>
+  </div>
+</section>
+
+<div class="footer">🌟 Belajar kata akan lebih seru kalau kita ikut bermain dan berdiskusi!</div>
+</main>
+</div>
+
+<script>
+let score=0;
+function addScore(n){score+=n;document.getElementById('score').textContent=score}
+document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('section').forEach(x=>x.classList.remove('active'));
+  b.classList.add('active'); document.getElementById(b.dataset.tab).classList.add('active');
+}));
+
+const syn=[
+ {w:'CERIA',a:['Sedih','Gembira','Marah','Lelah'],c:'Gembira'},
+ {w:'INDAH',a:['Elok','Buruk','Kasar','Kotor'],c:'Elok'},
+ {w:'RAJIN',a:['Malas','Tekun','Lambat','Bingung'],c:'Tekun'},
+ {w:'HEBAT',a:['Luar biasa','Biasa','Lemah','Kecil'],c:'Luar biasa'}
+];
+const ant=[
+ {w:'RAMAI',a:['Sepi','Riuh','Banyak','Padat'],c:'Sepi'},
+ {w:'PANJANG',a:['Lebar','Pendek','Tinggi','Besar'],c:'Pendek'},
+ {w:'PANAS',a:['Hangat','Dingin','Terang','Kering'],c:'Dingin'},
+ {w:'MUDAH',a:['Ringan','Sulit','Cepat','Senang'],c:'Sulit'}
+];
+let i1=0,i2=0;
+
+function renderQuiz(data,idx,prefix){
+ const item=data[idx%data.length];
+ document.getElementById('q'+prefix+'word').textContent=item.w;
+ const box=document.getElementById('choices'+prefix); box.innerHTML='';
+ document.getElementById('feedback'+prefix).textContent='';
+ document.getElementById('next'+prefix).style.display='none';
+ [...item.a].sort(()=>Math.random()-.5).forEach(opt=>{
+  const b=document.createElement('button');b.className='choice';b.textContent=opt;
+  b.onclick=()=>{
+   if(b.dataset.done)return; b.dataset.done='1';
+   if(opt===item.c){b.classList.add('correct');document.getElementById('feedback'+prefix).textContent='🎉 Benar! +10 poin';addScore(10)}
+   else{b.classList.add('wrong');document.getElementById('feedback'+prefix).textContent='Coba lagi. Jawaban yang tepat adalah '+item.c+'.'}
+   document.getElementById('next'+prefix).style.display='inline-block';
+  }; box.appendChild(b);
+ });
+}
+renderQuiz(syn,0,1);renderQuiz(ant,0,2);
+document.getElementById('next1').onclick=()=>{i1++;renderQuiz(syn,i1,1)};
+document.getElementById('next2').onclick=()=>{i2++;renderQuiz(ant,i2,2)};
+
+const pairs=[
+ ['besar','kecil'],['senang','gembira'],['cepat','lambat'],['pandai','cerdas'],
+ ['tinggi','rendah'],['cantik','indah']
+];
+let selected=null, solved=0;
+function renderMatch(){
+ const L=document.getElementById('leftWords'),R=document.getElementById('rightWords');
+ L.innerHTML='';R.innerHTML='';selected=null;
+ const shuffled=[...pairs].sort(()=>Math.random()-.5);
+ shuffled.forEach((p,idx)=>{
+  const b=document.createElement('button');b.className='match-item';b.textContent=p[0];b.dataset.word=p[0];
+  b.onclick=()=>selectLeft(b);L.appendChild(b);
+ });
+ [...pairs].sort(()=>Math.random()-.5).forEach(p=>{
+  const b=document.createElement('button');b.className='match-item';b.textContent=p[1];b.dataset.word=p[1];
+  b.onclick=()=>selectRight(b);R.appendChild(b);
+ });
+}
+function selectLeft(b){if(b.classList.contains('done'))return;document.querySelectorAll('#leftWords .match-item').forEach(x=>x.classList.remove('selected'));b.classList.add('selected');selected=b}
+function selectRight(b){
+ if(!selected||b.classList.contains('done'))return;
+ const map={'besar':'kecil','senang':'gembira','cepat':'lambat','pandai':'cerdas','tinggi':'rendah','cantik':'indah'};
+ if(map[selected.dataset.word]===b.dataset.word){
+  selected.classList.remove('selected');selected.classList.add('done');b.classList.add('done');addScore(10);solved++;
+  document.getElementById('matchFeedback').textContent='🎉 Cocok! +10 poin';
+ }else document.getElementById('matchFeedback').textContent='🤔 Belum tepat, coba lagi.';
+ selected=null;
+ if(solved===pairs.length)document.getElementById('matchFeedback').textContent='🏆 Semua pasangan benar! Hebat!';
+}
+renderMatch();
+
+let challengeTimer=null,challengeActive=false;
+const ch=[
+ ['TINGGI','RENDAH','Antonim'],['CERIA','GEMBIRA','Sinonim'],['KOTOR','BERSIH','Antonim'],
+ ['RAJIN','TEKUN','Sinonim'],['PANAS','DINGIN','Antonim'],['INDAH','ELOK','Sinonim'],
+ ['CEPAT','LAMBAT','Antonim'],['PINTAR','CERDAS','Sinonim']
+];
+let ci=0;
+function startChallenge(){
+ if(!document.getElementById('teamName').value.trim())document.getElementById('teamName').value='Kelompok Hebat';
+ challengeActive=true;ci=0;runChallengeTimer();showChallenge();
+}
+function showChallenge(){
+ const x=ch[ci%ch.length];
+ document.getElementById('challengeWords').innerHTML='<span>'+x[0]+'</span><span>↔</span><span>'+x[1]+'</span>';
+ document.getElementById('challengeInstruction').textContent='Apakah pasangan kata di atas adalah '+x[2]+'?';
+}
+function runChallengeTimer(){
+ clearInterval(challengeTimer);let t=30;document.getElementById('timer').textContent=t;
+ challengeTimer=setInterval(()=>{t--;document.getElementById('timer').textContent=t;if(t<=0){clearInterval(challengeTimer);challengeActive=false;document.getElementById('challengeInstruction').textContent='⏰ Waktu habis. Tekan Mulai untuk bermain lagi.'}},1000);
+}
+function challengeAnswer(correct){
+ if(!challengeActive)return;
+ const x=ch[ci%ch.length];
+ // The displayed pair is always of the stated type, so "BENAR" is correct.
+ if(correct){addScore(10);document.getElementById('challengeInstruction').textContent='🎉 Benar! +10 poin. Lanjut!';}
+ else document.getElementById('challengeInstruction').textContent='Belum tepat. Lanjut ke pasangan berikutnya.';
+ ci++;showChallenge();
+}
+</script>
+</body>
+</html>
